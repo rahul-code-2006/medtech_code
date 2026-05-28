@@ -4,13 +4,17 @@ df = pd.read_csv('heart.csv')
 
 # 'fbs' is Fasting Blood Sugar
 
+
+#fill in the empty values
 median_bs= df['fbs'].median()
 df['fbs']=df['fbs'].fillna(median_bs)
 
-
-df=df[df['age']>=0]
 median_chol= df['chol'].median()
 df['chol']=df['chol'].fillna(median_chol)
+
+#drop the negative age
+df=df[df['age']>=0]
+
 
 def flag_clinical_outliers(df, column):
     new_column_name = f"{column}_outlier"
@@ -27,5 +31,4 @@ for i in df.keys():
     if i=='target'or i=='sex'or i=='cp':
         continue
     flag_clinical_outliers(df,i)
-
-print(df['ca'])
+print(df.head())
